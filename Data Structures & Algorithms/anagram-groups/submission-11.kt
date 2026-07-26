@@ -1,17 +1,17 @@
 class Solution {
-    fun twoSum(nums: IntArray, target: Int): IntArray {
-        val map = mutableMapOf<Int, Int>()
+    fun groupAnagrams(strs: Array<String>): List<List<String>> {
+        val map = mutableMapOf<MutableList<Int>, MutableList<String>>()
 
-        for ((index, number) in nums.withIndex()) {
-            val difference = target - number
+        for (word in strs) {
+            val listKey = MutableList<Int>(26) { 0 }
 
-            map[difference]?.let { oldIndex -> 
-                return intArrayOf(oldIndex, index)
+            for (char in word) {
+                listKey[char - 'a']++
             }
 
-            map[number] = index
+            var wordList = map.getOrPut(listKey) { mutableListOf() }.add(word)
         }
 
-        return IntArray(2)
+        return map.values.toMutableList()
     }
 }
